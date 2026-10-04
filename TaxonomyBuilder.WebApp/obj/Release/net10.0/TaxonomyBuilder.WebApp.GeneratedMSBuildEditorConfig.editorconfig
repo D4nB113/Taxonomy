@@ -1,0 +1,66 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.VerifyReferenceTrimCompatibility = 
+build_property.VerifyReferenceAotCompatibility = 
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = TaxonomyBuilder.WebApp
+build_property.RootNamespace = TaxonomyBuilder.WebApp
+build_property.ProjectDir = /workspaces/Taxonomy/TaxonomyBuilder.WebApp/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 10.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /workspaces/Taxonomy/TaxonomyBuilder.WebApp
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Components/CategoryTreeNode.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9DYXRlZ29yeVRyZWVOb2RlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Components/PropertyListEditor.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Qcm9wZXJ0eUxpc3RFZGl0b3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Components/PropertyNodeEditor.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Qcm9wZXJ0eU5vZGVFZGl0b3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Components/PropertyTreeDisplay.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Qcm9wZXJ0eVRyZWVEaXNwbGF5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Pages/NotFound.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTm90Rm91bmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

@@ -1,0 +1,190 @@
+@inject TaxonomyRepository Repository
+
+<li class="class-tree-node" @key="Category.Id">
+    <div class="class-row @(_isDropTarget ? "drop-target" : null)"
+         draggable="true"
+            data-category-id="@Category.Id"
+         @ondragstart="StartDrag"
+         @ondragend="EndDrag"
+         @ondragover="DragOver"
+         @ondragover:preventDefault
+         @ondragleave="DragLeave"
+         @ondrop="Drop"
+         @ondrop:preventDefault>
+        <span class="class-depth" aria-label="Level @(Depth + 1)">@((Depth + 1).ToString("D2"))</span>
+        <div class="class-row-main">
+            <div class="class-heading">
+                <div class="class-copy">
+                    <h3>@Category.Name</h3>
+                    <p>@(string.IsNullOrWhiteSpace(Category.Description) ? "No description added." : Category.Description)</p>
+                </div>
+                <div class="class-actions">
+                    <span class="class-type">CLASS</span>
+                    <button class="add-child-button" type="button" @onclick="ShowChildForm">
+                        <span aria-hidden="true">+</span> Nested class
+                    </button>
+                </div>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(_dropError))
+            {
+                <p class="drop-error" role="alert">@_dropError</p>
+            }
+
+            @if (Category.Properties.Count > 0)
+            {
+                <div class="class-metadata">
+                    <p class="metadata-label">PROPERTIES</p>
+                    <PropertyTreeDisplay Properties="Category.Properties" />
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (_showChildForm)
+    {
+        <form class="nested-class-form" @onsubmit="CreateChild" @onsubmit:preventDefault>
+            <div class="nested-form-fields">
+                <input @bind="_childName" @bind:event="oninput" maxlength="100"
+                       aria-label="Nested class name" placeholder="Nested class name" required />
+                <input @bind="_childDescription" @bind:event="oninput" maxlength="300"
+                       aria-label="Nested class description" placeholder="Description (optional)" />
+            </div>
+            <div class="nested-class-properties">
+                <PropertyListEditor Properties="_childProperties" AddButtonLabel="Add property" />
+            </div>
+            @if (!string.IsNullOrWhiteSpace(_errorMessage))
+            {
+                <p class="form-message error-message" role="alert">@_errorMessage</p>
+            }
+            <div class="nested-form-actions">
+                <button class="create-button nested-submit" type="submit">Add nested class</button>
+                <button class="cancel-button" type="button" @onclick="CancelChild">Cancel</button>
+            </div>
+        </form>
+    }
+
+    @if (Category.Subcategories.Count > 0)
+    {
+        <ol class="nested-class-list" aria-label="Nested classes under @Category.Name">
+            @foreach (var subcategory in Category.Subcategories)
+            {
+                <CategoryTreeNode @key="subcategory.Id"
+                                  TaxonomyId="TaxonomyId"
+                                  Category="subcategory"
+                                  Depth="@(Depth + 1)"
+                                  DraggedCategoryId="DraggedCategoryId"
+                                  OnDragStarted="OnDragStarted"
+                                  OnDragFinished="OnDragFinished"
+                                  OnTreeChanged="OnTreeChanged" />
+            }
+        </ol>
+    }
+</li>
+
+@code {
+    [Parameter]
+    public Guid TaxonomyId { get; set; }
+
+    [Parameter, EditorRequired]
+    public Category Category { get; set; } = new();
+
+    [Parameter]
+    public int Depth { get; set; }
+
+    [Parameter]
+    public Guid? DraggedCategoryId { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> OnDragStarted { get; set; }
+
+    [Parameter]
+    public EventCallback OnDragFinished { get; set; }
+
+    [Parameter]
+    public EventCallback OnTreeChanged { get; set; }
+
+    private bool _showChildForm;
+    private bool _isDropTarget;
+    private string _childName = string.Empty;
+    private string _childDescription = string.Empty;
+    private string? _errorMessage;
+    private string? _dropError;
+    private List<CategoryProperty> _childProperties = [];
+
+    private Task StartDrag() => OnDragStarted.InvokeAsync(Category.Id);
+
+    private Task EndDrag() => OnDragFinished.InvokeAsync();
+
+    private void DragOver()
+    {
+        _isDropTarget = DraggedCategoryId is not null && DraggedCategoryId != Category.Id;
+    }
+
+    private void DragLeave()
+    {
+        _isDropTarget = false;
+    }
+
+    private async Task Drop()
+    {
+        _isDropTarget = false;
+        _dropError = null;
+
+        if (DraggedCategoryId is not Guid draggedCategoryId || draggedCategoryId == Category.Id)
+            return;
+
+        try
+        {
+            Repository.MoveCategory(TaxonomyId, draggedCategoryId, Category.Id);
+            await OnTreeChanged.InvokeAsync();
+        }
+        catch (InvalidOperationException exception)
+        {
+            _dropError = exception.Message;
+        }
+    }
+
+    private void ShowChildForm()
+    {
+        _showChildForm = true;
+        _errorMessage = null;
+    }
+
+    private void CreateChild()
+    {
+        var name = _childName.Trim();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            _errorMessage = "Enter a name for this nested class.";
+            return;
+        }
+
+        var child = new Category
+        {
+            Name = name,
+            Description = string.IsNullOrWhiteSpace(_childDescription) ? null : _childDescription.Trim(),
+            Properties = _childProperties,
+            VersionInfo = new VersionInfo { CreatedBy = "taxonomy-builder-web" }
+        };
+
+        try
+        {
+            Repository.AddSubcategory(TaxonomyId, Category.Id, child);
+            _showChildForm = false;
+            _childName = string.Empty;
+            _childDescription = string.Empty;
+            _childProperties = [];
+            _errorMessage = null;
+        }
+        catch (ArgumentException exception)
+        {
+            _errorMessage = exception.Message;
+        }
+    }
+
+    private void CancelChild()
+    {
+        _showChildForm = false;
+        _errorMessage = null;
+    }
+}

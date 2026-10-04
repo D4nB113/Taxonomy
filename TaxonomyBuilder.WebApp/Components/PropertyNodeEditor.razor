@@ -1,0 +1,81 @@
+<div class="property-node">
+    <div class="property-row">
+        <div class="property-values">
+            <input @bind="Property.Key"
+                   @bind:event="oninput"
+                   maxlength="100"
+                   aria-label="Property key"
+                   placeholder="Key" />
+            @if (Property.ValueType == CategoryPropertyDataType.Boolean)
+            {
+                <select @bind="Property.Value" aria-label="Property value">
+                    <option value="">Choose value</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            }
+            else
+            {
+                <input type="@ValueInputType"
+                       step="@ValueStep"
+                       @bind="Property.Value"
+                       @bind:event="oninput"
+                       maxlength="300"
+                       aria-label="Property value"
+                       placeholder="Value (optional for objects)" />
+            }
+            <select @bind="Property.ValueType" aria-label="Property value type">
+                <option value="@CategoryPropertyDataType.Text">Text</option>
+                <option value="@CategoryPropertyDataType.Number">Number</option>
+                <option value="@CategoryPropertyDataType.Boolean">Boolean</option>
+                <option value="@CategoryPropertyDataType.Date">Date</option>
+                <option value="@CategoryPropertyDataType.Time">Time</option>
+                <option value="@CategoryPropertyDataType.DateTime">Date/time</option>
+                <option value="@CategoryPropertyDataType.Object">Object</option>
+            </select>
+        </div>
+        <div class="property-actions">
+            <button class="add-nested-property-button" type="button"
+                    title="Add nested property" aria-label="Add nested property"
+                    @onclick="AddNestedProperty">
+                <span aria-hidden="true">+</span><span>Nested</span>
+            </button>
+            <button class="remove-property-button" type="button"
+                    title="Remove property" aria-label="Remove property"
+                    @onclick="() => OnRemove.InvokeAsync(Property.Id)">×</button>
+        </div>
+    </div>
+
+    @if (Property.Properties.Count > 0)
+    {
+        <div class="property-children">
+            <PropertyListEditor Properties="Property.Properties" AddButtonLabel="Add nested property" />
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public CategoryProperty Property { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<Guid> OnRemove { get; set; }
+
+    private string ValueInputType => Property.ValueType switch
+    {
+        CategoryPropertyDataType.Number => "number",
+        CategoryPropertyDataType.Date => "date",
+        CategoryPropertyDataType.Time => "time",
+        CategoryPropertyDataType.DateTime => "datetime-local",
+        _ => "text"
+    };
+
+    private string? ValueStep => Property.ValueType == CategoryPropertyDataType.Number ? "any" : null;
+
+    private void AddNestedProperty()
+    {
+        if (string.IsNullOrWhiteSpace(Property.Value))
+            Property.ValueType = CategoryPropertyDataType.Object;
+        Property.Properties.Add(new CategoryProperty());
+    }
+}

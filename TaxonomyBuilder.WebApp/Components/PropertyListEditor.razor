@@ -1,0 +1,37 @@
+<div class="property-list-editor">
+    @if (Properties.Count == 0)
+    {
+        <p class="property-empty">No key/value properties.</p>
+    }
+    else
+    {
+        <div class="property-editor-list">
+            @foreach (var property in Properties)
+            {
+                <PropertyNodeEditor @key="property.Id" Property="property" OnRemove="RemoveProperty" />
+            }
+        </div>
+    }
+
+    <button class="add-property-button" type="button" @onclick="AddProperty">
+        <span aria-hidden="true">+</span> @AddButtonLabel
+    </button>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public List<CategoryProperty> Properties { get; set; } = [];
+
+    [Parameter]
+    public string AddButtonLabel { get; set; } = "Add property";
+
+    private void AddProperty()
+    {
+        Properties.Add(new CategoryProperty());
+    }
+
+    private void RemoveProperty(Guid propertyId)
+    {
+        Properties.RemoveAll(property => property.Id == propertyId);
+    }
+}

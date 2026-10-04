@@ -1,0 +1,296 @@
+﻿@page "/"
+@using System.Text.Json
+@inject TaxonomyRepository Repository
+@inject IJSRuntime JS
+
+<PageTitle>Taxonomy Builder</PageTitle>
+
+<div class="app-shell">
+	<header class="topbar">
+		<a class="brand" href="./" aria-label="Taxonomy Builder home">
+			<span class="brand-mark" aria-hidden="true">T</span>
+			<span>taxonomy<span class="brand-light">/builder</span></span>
+		</a>
+		<div class="topbar-context">
+			<span class="status-dot" aria-hidden="true"></span>
+			<span>LOCAL WORKSPACE</span>
+		</div>
+	</header>
+
+	<main class="workspace">
+		<div class="page-heading">
+			<div>
+				<p class="eyebrow">FOUNDATION / CLASSES</p>
+				<h1>Taxonomy builder</h1>
+				<p class="page-summary">Start with the building blocks of your vocabulary.</p>
+			</div>
+			<div class="workspace-tag">
+				<span class="tag-index">01</span>
+				<span>IN-MEMORY<br />SESSION</span>
+			</div>
+		</div>
+
+		<div class="builder-layout">
+			<section class="list-panel" aria-labelledby="classes-heading">
+				<div class="list-heading">
+					<div>
+						<p class="eyebrow">YOUR TAXONOMY</p>
+						<h2 id="classes-heading">Class tree</h2>
+					</div>
+					<div class="class-tree-tools">
+						<span class="item-count" aria-label="@TotalClassCount classes">@TotalClassCount.ToString("D2")</span>
+						<button class="toolbar-button" type="button" @onclick="DownloadClasses">
+							<span class="toolbar-icon" aria-hidden="true">↓</span> Download JSON
+						</button>
+						<label class="toolbar-button upload-button">
+							<span class="toolbar-icon" aria-hidden="true">↑</span> Upload JSON
+							<InputFile class="file-input-overlay" accept=".json,application/json" OnChange="ImportClasses" />
+						</label>
+					</div>
+				</div>
+				<p class="tree-instructions">Drag a class onto another class to nest it.</p>
+				@if (!string.IsNullOrWhiteSpace(_transferMessage))
+				{
+					<p class="transfer-message @(_transferFailed ? "transfer-error" : "transfer-success")"
+					   role="@(_transferFailed ? "alert" : "status")">@_transferMessage</p>
+				}
+
+				@if (TotalClassCount == 0)
+				{
+					<div class="empty-state">
+						<div class="empty-mark" aria-hidden="true">
+							<span></span><span></span><span></span>
+						</div>
+						<h3>No classes yet</h3>
+						<p>Your new classes will appear here.</p>
+					</div>
+				}
+				else
+				{
+					<ol class="class-list">
+						@foreach (var category in _categories)
+						{
+							<CategoryTreeNode @key="category.Id"
+							                  TaxonomyId="_taxonomy.Id"
+							                  Category="category"
+							                  Depth="0"
+							                  DraggedCategoryId="_draggedCategoryId"
+							                  OnDragStarted="BeginCategoryDrag"
+							                  OnDragFinished="EndCategoryDrag"
+							                  OnTreeChanged="CategoryTreeChanged" />
+						}
+					</ol>
+				}
+				<div class="list-footer">
+					<span>STORED IN THIS SESSION</span>
+					<span class="footer-rule"></span>
+				</div>
+			</section>
+
+			<section class="create-panel" aria-labelledby="create-heading">
+				<div class="panel-kicker">
+					<span>NEW ENTRY</span>
+					<span class="step-number">01 / 01</span>
+				</div>
+				<h2 id="create-heading">Create a class</h2>
+				<p class="panel-description">Add a top-level class. Use nested classes to organize it later.</p>
+
+				<form @onsubmit="CreateClass" @onsubmit:preventDefault>
+					<label for="class-name">Class name <span class="required-mark">*</span></label>
+					<input id="class-name"
+						   @bind="_className"
+						   @bind:event="oninput"
+						   maxlength="100"
+						   placeholder="e.g. Materials"
+						   autocomplete="off"
+						   required />
+
+					<label for="class-description">Description <span class="optional-mark">OPTIONAL</span></label>
+					<textarea id="class-description"
+							  @bind="_classDescription"
+							  @bind:event="oninput"
+							  maxlength="300"
+							  rows="4"
+							  placeholder="What belongs in this class?"></textarea>
+
+					<div class="property-section">
+						<div class="property-section-heading">
+							<label>Class properties <span class="optional-mark">OPTIONAL</span></label>
+						</div>
+						<PropertyListEditor Properties="_propertyDrafts" AddButtonLabel="Add class property" />
+					</div>
+
+					@if (!string.IsNullOrEmpty(_errorMessage))
+					{
+						<p class="form-message error-message" role="alert">@_errorMessage</p>
+					}
+
+					<button class="create-button" type="submit">
+						<span class="button-plus" aria-hidden="true">+</span>
+						<span>Add class</span>
+					</button>
+				</form>
+				<p class="form-footnote"><span>*</span> Required field</p>
+			</section>
+		</div>
+	</main>
+</div>
+
+@code {
+	private const long MaxImportSize = 10 * 1024 * 1024;
+	private static readonly JsonSerializerOptions ClassJsonOptions = new()
+	{
+		WriteIndented = true,
+		PropertyNameCaseInsensitive = true
+	};
+
+	private readonly Taxonomy _taxonomy = new()
+	{
+		Name = "Workspace taxonomy",
+		VersionInfo = new VersionInfo { CreatedBy = "taxonomy-builder-web" }
+	};
+
+	private List<Category> _categories = [];
+	private List<CategoryProperty> _propertyDrafts = [];
+	private string _className = string.Empty;
+	private string _classDescription = string.Empty;
+	private string? _errorMessage;
+	private string? _transferMessage;
+	private bool _transferFailed;
+	private Guid? _draggedCategoryId;
+	private int TotalClassCount => CountClasses(_categories);
+
+	protected override void OnInitialized()
+	{
+		Repository.AddTaxonomy(_taxonomy);
+	}
+
+	private void CreateClass()
+	{
+		var name = _className.Trim();
+		if (string.IsNullOrWhiteSpace(name))
+		{
+			_errorMessage = "Enter a name for this class.";
+			return;
+		}
+
+		var category = new Category
+		{
+			Name = name,
+			Description = string.IsNullOrWhiteSpace(_classDescription) ? null : _classDescription.Trim(),
+			Properties = _propertyDrafts,
+			VersionInfo = new VersionInfo { CreatedBy = "taxonomy-builder-web" }
+		};
+
+		try
+		{
+			Repository.AddCategory(_taxonomy.Id, category);
+			_categories = _taxonomy.Categories.ToList();
+			_propertyDrafts = [];
+			_className = string.Empty;
+			_classDescription = string.Empty;
+			_errorMessage = null;
+		}
+		catch (ArgumentException exception)
+		{
+			_errorMessage = exception.Message;
+		}
+	}
+
+	private async Task DownloadClasses()
+	{
+		var json = JsonSerializer.Serialize(_taxonomy.Categories, ClassJsonOptions);
+		var fileName = $"taxonomy-classes-{DateTime.UtcNow:yyyyMMdd-HHmmss}.json";
+		await JS.InvokeVoidAsync("taxonomyTransfer.downloadJson", fileName, json);
+		SetTransferMessage($"Downloaded {TotalClassCount} classes.");
+	}
+
+	private async Task ImportClasses(InputFileChangeEventArgs eventArgs)
+	{
+		try
+		{
+			await using var stream = eventArgs.File.OpenReadStream(MaxImportSize);
+			var importedClasses = await JsonSerializer.DeserializeAsync<List<Category>>(stream, ClassJsonOptions);
+			if (importedClasses is null)
+			{
+				SetTransferMessage("The JSON file must contain an array of classes.", failed: true);
+				return;
+			}
+
+			var errors = new List<string>();
+			var classIds = new HashSet<Guid>();
+			foreach (var category in importedClasses)
+			{
+				if (category is null)
+				{
+					errors.Add("The JSON file contains an empty class entry.");
+					continue;
+				}
+
+				errors.AddRange(category.Validate());
+				foreach (var nestedClass in EnumerateClasses([category]))
+				{
+					if (nestedClass.Id == Guid.Empty || !classIds.Add(nestedClass.Id))
+						errors.Add($"Class '{nestedClass.Name}' has a missing or duplicate ID.");
+				}
+			}
+
+			if (errors.Count > 0)
+			{
+				SetTransferMessage(string.Join(" ", errors), failed: true);
+				return;
+			}
+
+			_taxonomy.Categories = importedClasses;
+			_categories = _taxonomy.Categories.ToList();
+			SetTransferMessage($"Uploaded {TotalClassCount} classes.");
+		}
+		catch (Exception exception) when (exception is JsonException or IOException)
+		{
+			SetTransferMessage($"Could not import classes: {exception.Message}", failed: true);
+		}
+	}
+
+	private static IEnumerable<Category> EnumerateClasses(IEnumerable<Category>? categories)
+	{
+		if (categories is null) yield break;
+
+		foreach (var category in categories)
+		{
+			if (category is null) continue;
+			yield return category;
+			foreach (var subcategory in EnumerateClasses(category.Subcategories))
+				yield return subcategory;
+		}
+	}
+
+	private void SetTransferMessage(string message, bool failed = false)
+	{
+		_transferMessage = message;
+		_transferFailed = failed;
+	}
+
+	private static int CountClasses(IEnumerable<Category> categories) =>
+		categories.Sum(category => 1 + CountClasses(category.Subcategories));
+
+	private Task BeginCategoryDrag(Guid categoryId)
+	{
+		_draggedCategoryId = categoryId;
+		return Task.CompletedTask;
+	}
+
+	private Task EndCategoryDrag()
+	{
+		_draggedCategoryId = null;
+		return Task.CompletedTask;
+	}
+
+	private Task CategoryTreeChanged()
+	{
+		_draggedCategoryId = null;
+		_categories = _taxonomy.Categories.ToList();
+		return Task.CompletedTask;
+	}
+}
+
+Welcome to your new app.

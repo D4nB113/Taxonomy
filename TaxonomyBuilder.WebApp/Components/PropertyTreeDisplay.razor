@@ -1,0 +1,34 @@
+@if (Properties.Count > 0)
+{
+    <ul class="property-tree">
+        @foreach (var property in Properties)
+        {
+            <li @key="property.Id">
+                <div class="property-tree-entry">
+                    <span class="property-tree-key">@property.Key</span>
+                    @if (!string.IsNullOrWhiteSpace(property.Value))
+                    {
+                        <span class="property-tree-value">@property.Value</span>
+                        @if (property.ValueType != CategoryPropertyDataType.Text && property.ValueType != CategoryPropertyDataType.Object)
+                        {
+                            <span class="property-tree-type">@property.ValueType</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="property-tree-type">@(property.Properties.Count > 0 ? CategoryPropertyDataType.Object : property.ValueType)</span>
+                    }
+                </div>
+                @if (property.Properties.Count > 0)
+                {
+                    <PropertyTreeDisplay Properties="property.Properties" />
+                }
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public List<CategoryProperty> Properties { get; set; } = [];
+}

@@ -1,0 +1,4 @@
+/workspaces/Taxonomy/TaxonomyBuilder.WebApp/bin/Release/net10.0/publish/wwwroot/index.html
+/workspaces/Taxonomy/TaxonomyBuilder.WebApp/bin/Release/net10.0/publish/TaxonomyBuilder.WebApp.runtimeconfig.json
+/workspaces/Taxonomy/TaxonomyBuilder.WebApp/bin/Release/net10.0/publish/dotnet.js
+/workspaces/Taxonomy/TaxonomyBuilder.WebApp/bin/Release/net10.0/publish/web.config

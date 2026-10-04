@@ -1,0 +1,12 @@
+/workspaces/Taxonomy/TaxonomyBuilder/bin/Debug/net8.0/TaxonomyBuilder.deps.json
+/workspaces/Taxonomy/TaxonomyBuilder/bin/Debug/net8.0/TaxonomyBuilder.dll
+/workspaces/Taxonomy/TaxonomyBuilder/bin/Debug/net8.0/TaxonomyBuilder.pdb
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/TaxonomyBuilder.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/TaxonomyBuilder.AssemblyInfoInputs.cache
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/TaxonomyBuilder.AssemblyInfo.cs
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/TaxonomyBuilder.csproj.CoreCompileInputs.cache
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/TaxonomyBuilder.sourcelink.json
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/TaxonomyBuilder.dll
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/refint/TaxonomyBuilder.dll
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/TaxonomyBuilder.pdb
+/workspaces/Taxonomy/TaxonomyBuilder/obj/Debug/net8.0/ref/TaxonomyBuilder.dll

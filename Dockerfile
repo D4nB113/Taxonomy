@@ -1,19 +1,16 @@
-# Build and publish the pure Blazor WebAssembly application with the .NET 10 SDK.
+# Build the Blazor WebAssembly UI and ASP.NET Core authentication host.
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY . .
-RUN dotnet publish TaxonomyBuilder.WebApp/TaxonomyBuilder.WebApp.csproj \
+RUN dotnet publish TaxonomyBuilder.Server/TaxonomyBuilder.Server.csproj \
     --configuration Release \
     --output /app/publish
 
-# Use the domain root for assets when a client-side route is loaded directly.
-RUN sed -i 's|<base href="\./" />|<base href="/" />|' /app/publish/wwwroot/index.html
+# Run the authenticated host; Railway supplies PORT and terminates public HTTPS.
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish/ ./
 
-# Serve only the published static site from nginx; no .NET runtime is needed.
-FROM nginx:alpine AS runtime
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/publish/wwwroot/ /usr/share/nginx/html/
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "TaxonomyBuilder.Server.dll"]

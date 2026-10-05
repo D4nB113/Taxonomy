@@ -26,19 +26,19 @@ dotnet run --project TaxonomyBuilder.ConsoleApp/TaxonomyBuilder.ConsoleApp.cspro
 
 ## Web App
 
-`TaxonomyBuilder.WebApp` is a standalone Blazor WebAssembly app that references the core library. Its workspace shows the class tree on the left and the class-creation form on the right. Add child classes from a class row or drag one class onto another to reparent it. The library prevents moving a class into itself or one of its descendants.
+`TaxonomyBuilder.WebApp` is the Blazor WebAssembly client. `TaxonomyBuilder.Server` hosts that client and provides the OIDC sign-in callback and secure session cookie. The authenticated routes are `/dashboard` and `/builder`; sign-in is provided by the managed OIDC provider on `login.ontorious.co.uk`.
 
 Run it locally with:
 
 ```sh
-dotnet run --project TaxonomyBuilder.WebApp/TaxonomyBuilder.WebApp.csproj
+dotnet run --project TaxonomyBuilder.Server/TaxonomyBuilder.Server.csproj
 ```
 
-The sample stores data in memory, so classes are cleared when the app reloads. Each class starts with an empty synonyms list; there is no separate synonym-entry form. No database or server-side API is configured.
+Configure the OIDC settings described in [DEPLOYMENT.md](DEPLOYMENT.md) to enable sign-in. The taxonomy repository still stores classes in browser memory, so they are cleared when the app reloads and are not yet protected by server-side data authorization. Each class starts with an empty synonyms list; there is no separate synonym-entry form.
 
 ### GitHub Pages
 
-The `.github/workflows/deploy-pages.yml` workflow publishes the web app to GitHub Pages on pushes to `main`. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. The app uses a relative base path so it works when hosted under the repository's Pages URL.
+The GitHub Pages workflow, if enabled, only publishes static client assets and cannot provide the server-backed sign-in flow. Use the Railway server deployment for authenticated access.
 
 ## Project Structure
 

@@ -1,0 +1,56 @@
+@page "/"
+@page "/dashboard"
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Dashboard | Taxonomy Builder</PageTitle>
+
+<div class="app-shell">
+	<header class="topbar">
+		<a class="brand" href="/dashboard" aria-label="Taxonomy Builder dashboard">
+			<span class="brand-mark" aria-hidden="true">T</span>
+			<span>taxonomy<span class="brand-light">/builder</span></span>
+		</a>
+		<div class="topbar-context">
+			<span class="status-dot" aria-hidden="true"></span>
+			<span class="dashboard-user">@(_userName ?? "SIGNED IN")</span>
+			<a class="toolbar-button" href="/auth/logout">Sign out</a>
+		</div>
+	</header>
+
+	<main class="workspace dashboard-workspace">
+		<div class="page-heading">
+			<div>
+				<p class="eyebrow">YOUR WORKSPACE</p>
+				<h1>Dashboard</h1>
+				<p class="page-summary">Your taxonomy workspace starts here.</p>
+			</div>
+			<div class="workspace-tag">
+				<span class="tag-index">01</span>
+				<span>ONTORIOUS<br />WORKSPACE</span>
+			</div>
+		</div>
+
+		<section class="dashboard-placeholder" aria-labelledby="workspace-heading">
+			<div>
+				<p class="eyebrow">WORKSPACE OVERVIEW</p>
+				<h2 id="workspace-heading">Your dashboard is ready</h2>
+				<p>Manage and explore your taxonomies from one place.</p>
+			</div>
+			<a class="create-button dashboard-action" href="/builder">
+				<span>Open taxonomy builder</span>
+				<span aria-hidden="true">→</span>
+			</a>
+		</section>
+	</main>
+</div>
+
+@code {
+	private string? _userName;
+
+	protected override async Task OnInitializedAsync()
+	{
+		var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		_userName = authenticationState.User.Identity?.Name;
+	}
+}

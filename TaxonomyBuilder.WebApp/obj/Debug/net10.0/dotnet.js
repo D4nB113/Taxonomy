@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaxonomyBuilder.WebApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-tLHb26i2+ou+k3DtE7o865GeB32zsJ2kSv+Izk6jj8A=",
+    "hash": "sha256-wfgu4uH829mUdaescUZAwRgCp5NV22gaMIKrLK3rtiM=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -1242,8 +1242,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.wasm",
-        "name": "TaxonomyBuilder.q8oyclnyil.wasm",
-        "hash": "sha256-Op/AIRpH+9AzspJkriN0/yItJN2+Mc4KgfuhVCIBI0M=",
+        "name": "TaxonomyBuilder.wh6gbp26n6.wasm",
+        "hash": "sha256-HOy9uxFXMLLcQzvQ5ML9S7RrGgHTXYsdBWwXF30GbXM=",
         "cache": "force-cache"
       },
       {
@@ -1254,22 +1254,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.wasm",
-        "name": "TaxonomyBuilder.WebApp.yz4pw45i9g.wasm",
-        "hash": "sha256-jmX1BLzTegJjAd2odsWzWzOrtqd9eu9v5FaJk/8tDr8=",
+        "name": "TaxonomyBuilder.WebApp.kfp1aeaird.wasm",
+        "hash": "sha256-AGcDNkerhmP2l44b69m9wo9sTBwaIpSiQB/spLPrkNI=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaxonomyBuilder.pdb",
-        "name": "TaxonomyBuilder.0yqa9lqhbx.pdb",
-        "hash": "sha256-GFzZpDX2L+y2qsteDaQE5Uhr2wRk9OtLfsk454AdiIc=",
+        "name": "TaxonomyBuilder.15k0igzl50.pdb",
+        "hash": "sha256-9WdHhZGoJbJ2Lz2c0qrir+3z5PXco2Ujl5nD2DzlJM8=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.pdb",
-        "name": "TaxonomyBuilder.WebApp.6oiewy5vr3.pdb",
-        "hash": "sha256-Bk7kNdPmuFp+PZ/Erycwor/aP2U4RrrMF+Da45XN8o0=",
+        "name": "TaxonomyBuilder.WebApp.yij40lf9po.pdb",
+        "hash": "sha256-2t8N/ff6TywYckyCcMOiIZDWeX+LbGfSO/G9RT5ylnI=",
         "cache": "force-cache"
       }
     ],

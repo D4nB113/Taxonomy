@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaxonomyBuilder.WebApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-YFZ7L1UpunA2KUqMa7aW/RVRj6W5WFRW2bsX7Jxvy/8=",
+    "hash": "sha256-xyw/W3jfOL0J553xkD5/GpUvNiJounrnU0mls9wHsSc=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -68,6 +68,12 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
         "virtualPath": "Microsoft.AspNetCore.Components.wasm",
         "name": "Microsoft.AspNetCore.Components.aimal0hppb.wasm",
         "hash": "sha256-juoEIPp8RoC3PtrYH2MiQ/vyn/IGIPt+jyvP9wnRflg=",
+        "cache": "force-cache"
+      },
+      {
+        "virtualPath": "Microsoft.AspNetCore.Components.Authorization.wasm",
+        "name": "Microsoft.AspNetCore.Components.Authorization.ma86ed1p9u.wasm",
+        "hash": "sha256-fuFpRWWd7dM2CSGD5uZrE3u6ehVplfizY8LGJx370iQ=",
         "cache": "force-cache"
       },
       {
@@ -1236,8 +1242,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.wasm",
-        "name": "TaxonomyBuilder.4zhuqrnum0.wasm",
-        "hash": "sha256-gEzLlFAzp1BbWuuZucxs8VeMg7QOolaM5KHZHQ53Ek0=",
+        "name": "TaxonomyBuilder.xvv8bmsjmw.wasm",
+        "hash": "sha256-bda0cBI/EGwanAt5VKNEE9NfTa1FXLq5q9K/OsHo70c=",
         "cache": "force-cache"
       },
       {
@@ -1248,22 +1254,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.wasm",
-        "name": "TaxonomyBuilder.WebApp.v42o7un79y.wasm",
-        "hash": "sha256-MRAt5+1Uc3uKZOJR0dyizYlSrbcoumdKo1GCxZmWc50=",
+        "name": "TaxonomyBuilder.WebApp.iscwb8qbsg.wasm",
+        "hash": "sha256-Pox55gn2DFSKQMZNLosC8doV9kerDl90p0YxWfYrdkA=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaxonomyBuilder.pdb",
-        "name": "TaxonomyBuilder.oz34etexmb.pdb",
-        "hash": "sha256-zJD2auVWFlvlhZwKEF2GETLUpC7vBU+DOheZziuQ5j8=",
+        "name": "TaxonomyBuilder.pojdehavwn.pdb",
+        "hash": "sha256-F0kOU+Yq3yOQ7QOtkmZFKQc5E4WWzAQxdgRs2xn9lV4=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.pdb",
-        "name": "TaxonomyBuilder.WebApp.l981ivwr2a.pdb",
-        "hash": "sha256-5zF70LQ7eHOh8fGyB7FtWLnkID+wvdyA+N3Y64IfHEg=",
+        "name": "TaxonomyBuilder.WebApp.scmtsegkgy.pdb",
+        "hash": "sha256-bKr9vkkogLJkAt7WiYlw2wZXFq9e1ANZ+2XCEfYznUM=",
         "cache": "force-cache"
       }
     ],

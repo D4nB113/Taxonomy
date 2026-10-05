@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "W2KY82v2xy4=",
+  "dgSpecHash": "mZV4dKB2GxM=",
   "success": true,
   "projectFilePath": "/workspaces/Taxonomy/TaxonomyBuilder.WebApp/TaxonomyBuilder.WebApp.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "/home/codespace/.nuget/packages/microsoft.aspnetcore.authorization/10.0.12/microsoft.aspnetcore.authorization.10.0.12.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.aspnetcore.components/10.0.12/microsoft.aspnetcore.components.10.0.12.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.aspnetcore.components.analyzers/10.0.12/microsoft.aspnetcore.components.analyzers.10.0.12.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.components.authorization/10.0.12/microsoft.aspnetcore.components.authorization.10.0.12.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.aspnetcore.components.forms/10.0.12/microsoft.aspnetcore.components.forms.10.0.12.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.aspnetcore.components.web/10.0.12/microsoft.aspnetcore.components.web.10.0.12.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.aspnetcore.components.webassembly/10.0.12/microsoft.aspnetcore.components.webassembly.10.0.12.nupkg.sha512",

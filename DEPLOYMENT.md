@@ -48,8 +48,10 @@ HTTPS headers. Set the service target port to `8080` if Railway requests one.
 3. Add the OIDC environment variables below as Railway variables. Keep the
    client secret out of source control.
 4. For stable authentication cookies across restarts, attach a Railway volume
-   mounted at `/data` and set `DataProtection__KeysPath=/data/dp-keys`. Use one
-   server instance unless all instances share the same data-protection keys.
+   mounted at `/data`. In Production, the app stores data-protection keys at
+   `/data/dp-keys` by default. Set `DataProtection__KeysPath` only to override
+   that location. Use one server instance unless all instances share the same
+   data-protection keys.
 
 ## DNS records
 
@@ -96,12 +98,16 @@ In the Railway app service, set:
 | `Authentication__ClientId` | The OIDC application's client ID |
 | `Authentication__ClientSecret` | The OIDC application's client secret, stored as a Railway secret |
 | `Authentication__LoginUrl` | `https://login.ontorious.co.uk/` |
-| `DataProtection__KeysPath` | `/data/dp-keys` when the Railway volume is mounted at `/data` |
+| `DataProtection__KeysPath` | Optional; defaults to `/data/dp-keys` in Production |
 
 The sign-in screen itself is served by the managed identity provider on
 `login.ontorious.co.uk`. The app backend receives the callback on the `app`
 subdomain and sets a host-only, secure, HttpOnly session cookie there. Do not
 set a parent-domain cookie for `.ontorious.co.uk`.
+
+The data-protection key files are not encrypted at rest by default. Restrict
+access to the Railway volume; configure a certificate-based key encryptor if
+your deployment requires encryption at rest.
 
 The taxonomy repository is still in browser memory. This implementation gates
 the builder UI but does not yet provide persistent or server-authorized

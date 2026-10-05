@@ -19,7 +19,8 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 });
 
 var dataProtection = builder.Services.AddDataProtection().SetApplicationName("TaxonomyBuilder");
-var dataProtectionPath = builder.Configuration["DataProtection:KeysPath"];
+var dataProtectionPath = builder.Configuration["DataProtection:KeysPath"]
+	?? (builder.Environment.IsProduction() ? "/data/dp-keys" : null);
 if (!string.IsNullOrWhiteSpace(dataProtectionPath))
 {
 	Directory.CreateDirectory(dataProtectionPath);

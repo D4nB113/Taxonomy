@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaxonomyBuilder.WebApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-xyw/W3jfOL0J553xkD5/GpUvNiJounrnU0mls9wHsSc=",
+    "hash": "sha256-tLHb26i2+ou+k3DtE7o865GeB32zsJ2kSv+Izk6jj8A=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -1242,8 +1242,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.wasm",
-        "name": "TaxonomyBuilder.xvv8bmsjmw.wasm",
-        "hash": "sha256-bda0cBI/EGwanAt5VKNEE9NfTa1FXLq5q9K/OsHo70c=",
+        "name": "TaxonomyBuilder.q8oyclnyil.wasm",
+        "hash": "sha256-Op/AIRpH+9AzspJkriN0/yItJN2+Mc4KgfuhVCIBI0M=",
         "cache": "force-cache"
       },
       {
@@ -1254,22 +1254,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.wasm",
-        "name": "TaxonomyBuilder.WebApp.iscwb8qbsg.wasm",
-        "hash": "sha256-Pox55gn2DFSKQMZNLosC8doV9kerDl90p0YxWfYrdkA=",
+        "name": "TaxonomyBuilder.WebApp.yz4pw45i9g.wasm",
+        "hash": "sha256-jmX1BLzTegJjAd2odsWzWzOrtqd9eu9v5FaJk/8tDr8=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaxonomyBuilder.pdb",
-        "name": "TaxonomyBuilder.pojdehavwn.pdb",
-        "hash": "sha256-F0kOU+Yq3yOQ7QOtkmZFKQc5E4WWzAQxdgRs2xn9lV4=",
+        "name": "TaxonomyBuilder.0yqa9lqhbx.pdb",
+        "hash": "sha256-GFzZpDX2L+y2qsteDaQE5Uhr2wRk9OtLfsk454AdiIc=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.pdb",
-        "name": "TaxonomyBuilder.WebApp.scmtsegkgy.pdb",
-        "hash": "sha256-bKr9vkkogLJkAt7WiYlw2wZXFq9e1ANZ+2XCEfYznUM=",
+        "name": "TaxonomyBuilder.WebApp.6oiewy5vr3.pdb",
+        "hash": "sha256-Bk7kNdPmuFp+PZ/Erycwor/aP2U4RrrMF+Da45XN8o0=",
         "cache": "force-cache"
       }
     ],

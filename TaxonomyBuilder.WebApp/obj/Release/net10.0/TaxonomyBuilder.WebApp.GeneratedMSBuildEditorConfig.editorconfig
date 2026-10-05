@@ -49,8 +49,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Qcm9wZXJ0eVRyZWVEaXNwbGF5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Components/RedirectToLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9SZWRpcmVjdFRvTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/workspaces/Taxonomy/TaxonomyBuilder.WebApp/Pages/Home.razor]

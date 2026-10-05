@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaxonomyBuilder.WebApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-wfgu4uH829mUdaescUZAwRgCp5NV22gaMIKrLK3rtiM=",
+    "hash": "sha256-a87nKzrozbtkWeOh/RFe91YAMJCL7UIk72EpQzWuOoE=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -1242,8 +1242,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.wasm",
-        "name": "TaxonomyBuilder.wh6gbp26n6.wasm",
-        "hash": "sha256-HOy9uxFXMLLcQzvQ5ML9S7RrGgHTXYsdBWwXF30GbXM=",
+        "name": "TaxonomyBuilder.5iky60d18o.wasm",
+        "hash": "sha256-s43DIcVuxeKzyZiOqzDImsIOj35Evku/X1qE2oSzBGc=",
         "cache": "force-cache"
       },
       {
@@ -1254,22 +1254,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.wasm",
-        "name": "TaxonomyBuilder.WebApp.kfp1aeaird.wasm",
-        "hash": "sha256-AGcDNkerhmP2l44b69m9wo9sTBwaIpSiQB/spLPrkNI=",
+        "name": "TaxonomyBuilder.WebApp.1n8a2zt60i.wasm",
+        "hash": "sha256-w7cu6uFUTZKp5iI9TSbJS2Qb2OdHBgcxQfec1wQQCvM=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaxonomyBuilder.pdb",
-        "name": "TaxonomyBuilder.15k0igzl50.pdb",
-        "hash": "sha256-9WdHhZGoJbJ2Lz2c0qrir+3z5PXco2Ujl5nD2DzlJM8=",
+        "name": "TaxonomyBuilder.2mhz3e0puo.pdb",
+        "hash": "sha256-FqEy87DuidbATN9w0tk5npllQWLah6n/CoXOHOARuVE=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.pdb",
-        "name": "TaxonomyBuilder.WebApp.yij40lf9po.pdb",
-        "hash": "sha256-2t8N/ff6TywYckyCcMOiIZDWeX+LbGfSO/G9RT5ylnI=",
+        "name": "TaxonomyBuilder.WebApp.kdu8tg7jqc.pdb",
+        "hash": "sha256-OAdmKqJfa2STG7x5JCOpycAfcc+ko0Io/EwuVmW7Auk=",
         "cache": "force-cache"
       }
     ],

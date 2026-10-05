@@ -28,12 +28,13 @@ if (!string.IsNullOrWhiteSpace(dataProtectionPath))
 	dataProtection.PersistKeysToFileSystem(new DirectoryInfo(dataProtectionPath));
 }
 
-var authClientId = builder.Configuration["Authentication:ClientId"] ?? builder.Configuration["AuthenticationClientId"] ?? "not-configured";
-var authClientSecret = builder.Configuration["Authentication:ClientSecret"] ?? builder.Configuration["AuthenticationClientSecret"] ?? string.Empty;
+var authClientId = builder.Configuration["Authentication:ClientId"] ?? builder.Configuration["AuthenticationClientId"];
+var authClientSecret = builder.Configuration["Authentication:ClientSecret"] ?? builder.Configuration["AuthenticationClientSecret"];
 var authAuthority = builder.Configuration["Authentication:Authority"] ?? builder.Configuration["AuthenticationAuthority"] ?? "https://github.com/login";
 var authLoginUrl = builder.Configuration["Authentication:LoginUrl"] ?? builder.Configuration["AuthenticationLoginUrl"] ?? "https://github.com/login";
+var hasGitHubAuthConfig = !string.IsNullOrWhiteSpace(authClientId) && !string.IsNullOrWhiteSpace(authClientSecret);
 
-builder.Services.AddAuthentication(options =>
+var authenticationBuilder = builder.Services.AddAuthentication(options =>
 {
 	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 })
@@ -57,59 +58,63 @@ builder.Services.AddAuthentication(options =>
 		context.Response.Redirect(context.RedirectUri);
 		return Task.CompletedTask;
 	};
-})
-.AddOAuth("github", options =>
+});
+
+if (hasGitHubAuthConfig)
 {
-	options.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
-	options.TokenEndpoint = "https://github.com/login/oauth/access_token";
-	options.UserInformationEndpoint = "https://api.github.com/user";
-	options.CallbackPath = "/signin-github";
-	options.ClientId = authClientId;
-	options.ClientSecret = authClientSecret;
-	options.SaveTokens = false;
-	options.Scope.Clear();
-	options.Scope.Add("read:user");
-	options.Scope.Add("user:email");
-	options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
-	options.ClaimActions.MapJsonKey(ClaimTypes.Name, "login");
-	options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
-	options.Events = new OAuthEvents
+	authenticationBuilder.AddOAuth("github", options =>
 	{
-		OnCreatingTicket = async context =>
+		options.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
+		options.TokenEndpoint = "https://github.com/login/oauth/access_token";
+		options.UserInformationEndpoint = "https://api.github.com/user";
+		options.CallbackPath = "/signin-github";
+		options.ClientId = authClientId!;
+		options.ClientSecret = authClientSecret!;
+		options.SaveTokens = false;
+		options.Scope.Clear();
+		options.Scope.Add("read:user");
+		options.Scope.Add("user:email");
+		options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+		options.ClaimActions.MapJsonKey(ClaimTypes.Name, "login");
+		options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+		options.Events = new OAuthEvents
 		{
-			using var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
-			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
-
-			using var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
-			response.EnsureSuccessStatusCode();
-
-			await using var stream = await response.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted);
-			using var json = await JsonDocument.ParseAsync(stream, cancellationToken: context.HttpContext.RequestAborted);
-			context.RunClaimActions(json.RootElement);
-
-			if (!context.Identity!.HasClaim(c => c.Type == ClaimTypes.Email))
+			OnCreatingTicket = async context =>
 			{
-				using var emailRequest = new HttpRequestMessage(HttpMethod.Get, "https://api.github.com/user/emails");
-				emailRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				emailRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+				using var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+				request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
 
-				using var emailResponse = await context.Backchannel.SendAsync(emailRequest, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
-				emailResponse.EnsureSuccessStatusCode();
-				await using var emailStream = await emailResponse.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted);
-				using var emailJson = await JsonDocument.ParseAsync(emailStream, cancellationToken: context.HttpContext.RequestAborted);
-				var primaryEmail = emailJson.RootElement.EnumerateArray()
-					.FirstOrDefault(entry => entry.TryGetProperty("primary", out var primary) && primary.GetBoolean())
-					.TryGetProperty("email", out var emailProperty) ? emailProperty.GetString() : null;
+				using var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
+				response.EnsureSuccessStatusCode();
 
-				if (!string.IsNullOrWhiteSpace(primaryEmail))
+				await using var stream = await response.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted);
+				using var json = await JsonDocument.ParseAsync(stream, cancellationToken: context.HttpContext.RequestAborted);
+				context.RunClaimActions(json.RootElement);
+
+				if (!context.Identity!.HasClaim(c => c.Type == ClaimTypes.Email))
 				{
-					context.Identity.AddClaim(new Claim(ClaimTypes.Email, primaryEmail));
+					using var emailRequest = new HttpRequestMessage(HttpMethod.Get, "https://api.github.com/user/emails");
+					emailRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+					emailRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+
+					using var emailResponse = await context.Backchannel.SendAsync(emailRequest, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
+					emailResponse.EnsureSuccessStatusCode();
+					await using var emailStream = await emailResponse.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted);
+					using var emailJson = await JsonDocument.ParseAsync(emailStream, cancellationToken: context.HttpContext.RequestAborted);
+					var primaryEmail = emailJson.RootElement.EnumerateArray()
+						.FirstOrDefault(entry => entry.TryGetProperty("primary", out var primary) && primary.GetBoolean())
+						.TryGetProperty("email", out var emailProperty) ? emailProperty.GetString() : null;
+
+					if (!string.IsNullOrWhiteSpace(primaryEmail))
+					{
+						context.Identity.AddClaim(new Claim(ClaimTypes.Email, primaryEmail));
+					}
 				}
 			}
-		}
-	};
-});
+		};
+	});
+}
 
 builder.Services.AddAuthorization();
 

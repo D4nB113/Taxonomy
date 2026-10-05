@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaxonomyBuilder.WebApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-oLWwrFJnki5eQIp+umxz0jY4t43m4+b51C6sD9BChD4=",
+    "hash": "sha256-+sd6ok2a6VvUOrZtKo+Xn1xppCVN/+1PJnb6ryQm/aQ=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -1242,28 +1242,28 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.wasm",
-        "name": "TaxonomyBuilder.mzv82731bj.wasm",
-        "hash": "sha256-Dn4ZKxO3PGTzWKqZ99OTiBjGAiqmeaEJrfQ5HAzeuYA=",
+        "name": "TaxonomyBuilder.48a4ho7lic.wasm",
+        "hash": "sha256-xM0ssTBGaR9Gard2lfWUG0Mopqbt6FxymX24pZXdAGA=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.wasm",
-        "name": "TaxonomyBuilder.WebApp.tbww5dd9os.wasm",
-        "hash": "sha256-VwuCoDO/ddCjoj9NuOJHlEV4ZBIpy1mu8IJ9RbXKAhg=",
+        "name": "TaxonomyBuilder.WebApp.5lnl7gzqga.wasm",
+        "hash": "sha256-qcHm0ddATTREHV9HAZsqR3L16wVI9lyjkgc1gppCjDs=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaxonomyBuilder.pdb",
-        "name": "TaxonomyBuilder.w3xoyvo60u.pdb",
-        "hash": "sha256-nPv5o/wZbDYiccEsXvguGIkMuwe08MjquXv8YwbjoYA=",
+        "name": "TaxonomyBuilder.118zen78oo.pdb",
+        "hash": "sha256-m/I3EuzCDszWyREkyl74NwgBcM2PMBjm0XrAY9oXAVw=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.pdb",
-        "name": "TaxonomyBuilder.WebApp.d3c8b72aek.pdb",
-        "hash": "sha256-OfakQ50YMaAlt8260PgyoyLtotCGkb6djfWav2t/7a0=",
+        "name": "TaxonomyBuilder.WebApp.wjxfbv61qr.pdb",
+        "hash": "sha256-nL6NekJ8CB951zcMB5OUGO4guoMMdeSGNnTXI5XEY4w=",
         "cache": "force-cache"
       }
     ]

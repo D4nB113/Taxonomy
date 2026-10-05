@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaxonomyBuilder.WebApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-a87nKzrozbtkWeOh/RFe91YAMJCL7UIk72EpQzWuOoE=",
+    "hash": "sha256-mVw802ai+P4F4JANBhGDAE+2f7U/zsTkBw6CxULJiR4=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -1242,8 +1242,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.wasm",
-        "name": "TaxonomyBuilder.5iky60d18o.wasm",
-        "hash": "sha256-s43DIcVuxeKzyZiOqzDImsIOj35Evku/X1qE2oSzBGc=",
+        "name": "TaxonomyBuilder.867ud8bqec.wasm",
+        "hash": "sha256-0PwtakmcFz9F4Gv2NXS4MulJ9fppSG71np/puwVut40=",
         "cache": "force-cache"
       },
       {
@@ -1254,22 +1254,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.wasm",
-        "name": "TaxonomyBuilder.WebApp.1n8a2zt60i.wasm",
-        "hash": "sha256-w7cu6uFUTZKp5iI9TSbJS2Qb2OdHBgcxQfec1wQQCvM=",
+        "name": "TaxonomyBuilder.WebApp.7y0bmtc9sp.wasm",
+        "hash": "sha256-j0OF+LRiFTYmWrsGXWC9VJsELLciRi9v0mTNq5MjMug=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaxonomyBuilder.pdb",
-        "name": "TaxonomyBuilder.2mhz3e0puo.pdb",
-        "hash": "sha256-FqEy87DuidbATN9w0tk5npllQWLah6n/CoXOHOARuVE=",
+        "name": "TaxonomyBuilder.awpoxjq6sh.pdb",
+        "hash": "sha256-GqaWICbS0eARC3SNJDBEICZauHPWFOjJvsAVvxkRV7k=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "TaxonomyBuilder.WebApp.pdb",
-        "name": "TaxonomyBuilder.WebApp.kdu8tg7jqc.pdb",
-        "hash": "sha256-OAdmKqJfa2STG7x5JCOpycAfcc+ko0Io/EwuVmW7Auk=",
+        "name": "TaxonomyBuilder.WebApp.boztabl0x1.pdb",
+        "hash": "sha256-2//Lfs2VzMcd/3gL0TnFBseZqoyfZSMy4aT/U2ZQHVc=",
         "cache": "force-cache"
       }
     ],

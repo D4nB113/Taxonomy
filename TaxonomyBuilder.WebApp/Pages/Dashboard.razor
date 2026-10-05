@@ -2,6 +2,7 @@
 @page "/dashboard"
 @attribute [Authorize]
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager Navigation
 
 <PageTitle>Dashboard | Taxonomy Builder</PageTitle>
 
@@ -37,7 +38,7 @@
 				<h2 id="workspace-heading">Your dashboard is ready</h2>
 				<p>Manage and explore your taxonomies from one place.</p>
 			</div>
-			<a class="create-button dashboard-action" href="/builder">
+			<a class="create-button dashboard-action" href="/builder" @onclick="OpenBuilder" @onclick:preventDefault="true">
 				<span>Open taxonomy builder</span>
 				<span aria-hidden="true">→</span>
 			</a>
@@ -53,4 +54,6 @@
 		var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 		_userName = authenticationState.User.Identity?.Name;
 	}
+
+	private void OpenBuilder() => Navigation.NavigateTo("/builder", forceLoad: true);
 }

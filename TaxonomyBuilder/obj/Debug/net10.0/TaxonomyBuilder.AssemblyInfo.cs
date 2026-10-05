@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaxonomyBuilder")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0902a8737fd92447b7040d54df1a33b7a80623a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ca5ec2ada8857d9cc5893a3501556bb1a1463df")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaxonomyBuilder")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaxonomyBuilder")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
